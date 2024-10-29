@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TranscriptionApp
 
-## Getting Started
+## 概要
+**TranscriptionApp**は、音声ファイルをアップロードして文字起こしを行い、要約や議事録を生成するWebアプリケーションです。また、音声データを元にしたチャット機能も搭載しています。Reactとフレームワークを用いたシンプルで直感的なインターフェースを提供し、ユーザーが簡単に音声データの処理を行えるように設計されています。
 
-First, run the development server:
+## 主な機能
+- **音声ファイルアップロード**: WAV、MP3、M4A形式のファイル（最大100MB）をアップロードし、バックエンドで処理。
+- **文字起こし**: アップロードした音声ファイルを文字起こし。
+- **要約生成**: 文字起こしの内容から自動的に要約を生成。
+- **議事録生成**: 文字起こしの内容を元に、議事録形式の文書を自動生成。
+- **チャット機能**: 文字起こしや要約を参照しながら、AIとチャットを行うことが可能。
+- **ダークモード切り替え**: ダークモードの有効化、無効化が可能。
 
+## 使用技術
+- **フロントエンド**: React, Tailwind CSS, Framer Motion, react-dropzone
+- **バックエンド**: Axiosを用いたAPIリクエスト
+- **UIコンポーネント**: @/components/ui 以下のボタン、テキストエリア、プログレスバー、タブ、スイッチなどを利用
+
+## インストールと実行方法
+
+### 1. リポジトリのクローン
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/TranscriptionApp.git
+cd TranscriptionApp
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 必要な依存関係のインストール
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. 開発サーバーの起動
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+開発サーバーは `http://localhost:3000` で起動され、ブラウザからアクセスできます。
 
-## Learn More
+### 4. バックエンドサーバーの設定
+バックエンドAPIサーバーもローカルで起動する必要があります。詳細は各APIエンドポイントを以下のセクションで参照してください。
 
-To learn more about Next.js, take a look at the following resources:
+## APIエンドポイント
+アプリケーションのバックエンドは以下のエンドポイントを提供しています。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `POST /api/upload` : 音声ファイルのアップロード
+- `GET /api/transcribe/:fileId` : 文字起こしを実行
+- `POST /api/summarize` : 要約の生成
+- `POST /api/minutes` : 議事録の生成
+- `POST /api/chat` : チャットメッセージの送信
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+各エンドポイントは、`localhost:5001`で起動されるバックエンドサーバーを想定しています。
 
-## Deploy on Vercel
+## 使用方法
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **音声ファイルのアップロード**: 画面の指示に従い、音声ファイルをアップロードします。ファイルが許可されると進捗バーが表示されます。
+2. **文字起こしの生成**: アップロード完了後、自動的に文字起こしが行われ、結果が表示されます。
+3. **要約/議事録の生成**: 文字起こしが完了すると、要約と議事録を生成できます。
+4. **チャット**: チャットタブでAIアシスタントと対話が可能です。文字起こしや要約の内容をもとに応答が返されます。
+5. **ダークモード**: トグルスイッチでダークモードの切り替えが可能です。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 注意事項
+- 本アプリはAPIエンドポイントとしてOpenAIのAPIなどを利用する場合があり、その利用制限に達するとエラーが発生します。
+- 音声ファイルの処理には時間がかかることがあります。
+- 生成された要約や議事録の品質は、音声内容やOpenAI APIの制限に依存します。
+
+
